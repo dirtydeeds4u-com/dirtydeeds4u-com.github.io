@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!-- You think you're going to find answers in here? There are no answers in here -->
+<html lang="en">
+<head>
+<title>dirtydeeds4u.com</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+</head>
+<body id="b" style="background-color: #000;color: #0f0;font-family: monospace;">
+<p>Welcome to dirtydeeds4u.com.</p>
+<p>We're definitely not a shady website. There is no reason to be suspicious that you must log in to see anything.</p>
+<p><label for="u">Username:</label> <input id="u" type="text" name="username"></p>
+<p><label for="p">Password:</label> <input id="p" type="text" name="password"></p>
+<p><button id="d" onclick="decode()">Log In</button></p>
+<div id="secret"></div>
+<script>
+function getID(id) { return document.getElementById(id); }
+function decode() {
+	try {
+		getID("secret").innerHTML =	CryptoJS.AES.decrypt(window.secret,
+			getID("u").value + "\x00" + getID("p").value).toString(CryptoJS.enc.Utf8);
+	} catch(e) {
+		if (e.message == "Malformed UTF-8 data") {
+			getID("secret").innerHTML = "";
+			alert("Nope!");
+		} else {
+			throw e;
+		}
+	}
+}
+// seriously, breaking AES-256 is a lot harder than breaking the code in the contest
+window.secret =
+"U2FsdGVkX1/D+fKIuJPybD29b7UsMUKBt/15qtSjyRWVqXM7U6IsDjkANLN2wn8VozaO/8Hqqie+kmcbRfg1gHoO8RwfjY39Hr0H3c/TUv8ijLV/H0iLKESCBAgxDbA1TXLI4Bl0jlPJEfEU1aHdSZ/adNK/84hlrycabMRlzoQSdjDkTp6h14zLfnU+PsiOn6jot4aG634UBE47M3DOA23vo7aul7Jm/JhVuVG6bI6ciCFTuKYjm21RKDHmJRMVwO/jDGfs48nw5NqZKeYIRaWDO1tAEpPZR3bCkIXI1MRN4yvMmbTcIJiT9FRUyPRT9ttxKyz2vY+mn7Sm+Vb9GhJrElfgx22uVc173kTKyU6SQjOAz65M+8gKuuGjsiBImUpMB8a6YOJ8ekx/gl1wKs6kJ4aIfPpbXYJnkVKqqPR9pZDmxs3/fruue6tyzLSjlNc6GUNc9b3xcmfxWk4L2w=="
+getID("b").addEventListener("keydown", function(e) {
+	if (e.keyCode === 13) getID("d").click();
+});
+</script>
+</body>
+</html>
