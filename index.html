@@ -1,1 +1,38 @@
-<html><head><title></title><meta http-equiv="refresh" content="0; url=https://www.youtube.com/watch?v=dQw4w9WgXcQ"><script type="text/javascript">window.location.href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"</script></head><body><p><a href="https://emu.edu">EMU</a> was here</p></body></html>
+<!DOCTYPE html>
+<!-- https://www.cwu.edu/math/kryptos-2019-challenge-1 -->
+<html lang="en">
+<head>
+<title>dirtydeeds4u.com</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+</head>
+<body id="b" style="background-color: #000;color: #0f0;font-family: monospace;">
+<p>Welcome to dirtydeeds4u.com.</p>
+<p>We're definitely not a shady website. There is no reason to be suspicious that you must log in to see anything.</p>
+<p><label for="u">Username:</label> <input id="u" type="text" name="username"></p>
+<p><label for="p">Password:</label> <input id="p" type="password" name="password"></p>
+<p><button id="d" onclick="decode()">Log In</button></p>
+<div id="secret"></div>
+<script>
+function getID(id) { return document.getElementById(id); }
+function decode() {
+	try {
+		getID("secret").innerHTML =	CryptoJS.AES.decrypt(window.secret,
+			getID("u").value + "\x00" + getID("p").value).toString(CryptoJS.enc.Utf8);
+	} catch(e) {
+		if (e.message == "Malformed UTF-8 data") {
+			getID("secret").innerHTML = "";
+			alert("Nope!");
+		} else {
+			throw e;
+		}
+	}
+}
+// seriously, breaking AES-256 is a lot harder than breaking the code in the contest
+window.secret =
+"U2FsdGVkX1+jUKecpfKgnzoKORZYQ+WOgu2z0L7Nxx3DOnTKRv6Ot/KUO0o9/E5htMXuTP9NuuyscLZhmKQcLY+aSnR1IuLfAx7K6pc6G16405m3Q62jjyBCH/jlT7/te6Kj0C2FVCAIW1c3xrkq2mSaXh96hdqwyh/04bF+EMCRtrGdduAVpt+Re0flvAq04n+5Npw4C1u4wBus5nItTosu4MSSXQSNq40MI1iPq638z2oT3zbIKbwkqBgUexaIJs8tWFXDeHn6lEwSbVXHZ1fC3306K8dpEMR8EML4Rno5xYQCBmxODauqx/mZP8WEWeTjnRHN2foBP4XPcbwo3MH4hhX5NKYqwl+eos6oH3udnxcB7p+Yq50nP6VIA8QXeERkz8549aDEyMgvRtd44mvIGQ68PbHhce/leI/zSb14xyod2WeFaQA1YOhqkC3znd7obpspE3rUITCVvwj7eX27JQw1u4ex7A4YFfPaNQU="
+getID("b").addEventListener("keydown", function(e) {
+	if (e.keyCode === 13) getID("d").click();
+});
+</script>
+</body>
+</html>
