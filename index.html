@@ -20,8 +20,9 @@ function decode() {
 			getID("u").value + "\x00" + getID("p").value).toString(CryptoJS.enc.Utf8);
 	} catch(e) {
 		if (e.message == "Malformed UTF-8 data") {
-			getID("secret").innerHTML = "";
-			alert("Nope!");
+			// getID("secret").innerHTML = "";
+			// alert("Nope!");
+			window.location.href="https://www.youtube.com/watch?v=dQw4w9WgXcQ";
 		} else {
 			throw e;
 		}
